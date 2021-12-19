@@ -11,4 +11,6 @@ contract Base {
 
     uint256 constant public LUSD_GAS_COMPENSATION = 200e18;
 
+    uint256 constant public LIQUIDATOR_FEE_PERCENT_DIVISOR = 200;
+
 }

@@ -43,6 +43,8 @@ contract Borrowing is Base {
 
         stakingPool.setAddresses(address(this), address(vaultManager));
         activePool.setAddresses(address(vaultManager), address(stabilityPool));
+        vaultManager.setAddresses(address(priceFeed), address(stabilityPool), activePool, lusdToken, gasPool);
+        stabilityPool.setAddresses(address(lusdToken), address(vaultManager));
     }
 
     function borrow(uint256 _lusdAmount) external payable {

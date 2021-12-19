@@ -4,7 +4,7 @@ pragma solidity ^0.8.7;
 
 import "hardhat/console.sol";
 
-library LiquityMath {
+library LiquidityMath {
     uint internal constant DECIMAL_PRECISION = 1e18;
 
     /* Precision for Nominal ICR (independent of price). Rationale for the value:

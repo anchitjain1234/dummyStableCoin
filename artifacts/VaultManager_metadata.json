@@ -11,6 +11,25 @@
 				"type": "constructor"
 			},
 			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "previousOwner",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "OwnershipTransferred",
+				"type": "event"
+			},
+			{
 				"inputs": [],
 				"name": "BORROWING_FEE_FLOOR",
 				"outputs": [
@@ -26,6 +45,19 @@
 			{
 				"inputs": [],
 				"name": "DECIMAL_PRECISION",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "LIQUIDATOR_FEE_PERCENT_DIVISOR",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -57,6 +89,19 @@
 						"internalType": "uint256",
 						"name": "",
 						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "activePool",
+				"outputs": [
+					{
+						"internalType": "contract ActivePool",
+						"name": "",
+						"type": "address"
 					}
 				],
 				"stateMutability": "view",
@@ -201,6 +246,75 @@
 				"type": "function"
 			},
 			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_borrower",
+						"type": "address"
+					}
+				],
+				"name": "liquidate",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "owner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "priceFeed",
+				"outputs": [
+					{
+						"internalType": "contract PriceFeed",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "renounceOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_priceFeedAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_stabilityPoolAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "contract ActivePool",
+						"name": "_activePool",
+						"type": "address"
+					}
+				],
+				"name": "setAddresses",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
 				"inputs": [],
 				"name": "sortedVaults",
 				"outputs": [
@@ -211,6 +325,32 @@
 					}
 				],
 				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "stabilityPool",
+				"outputs": [
+					{
+						"internalType": "contract StabilityPool",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "transferOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -245,7 +385,17 @@
 		],
 		"devdoc": {
 			"kind": "dev",
-			"methods": {},
+			"methods": {
+				"owner()": {
+					"details": "Returns the address of the current owner."
+				},
+				"renounceOwnership()": {
+					"details": "Leaves the contract without owner. It will not be possible to call `onlyOwner` functions anymore. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby removing any functionality that is only available to the owner."
+				},
+				"transferOwnership(address)": {
+					"details": "Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner."
+				}
+			},
 			"version": 1
 		},
 		"userdoc": {
@@ -271,27 +421,27 @@
 	},
 	"sources": {
 		"ActivePool.sol": {
-			"keccak256": "0x040cb975ead683c242965d9ee413cf4d6e0b60cee8d6eb31867821c66e07897b",
+			"keccak256": "0xfbb46e3414d9825bf6de007b6cd30dc8f402baa3f0e6d06cf2e3023e1c01da36",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://f9f0dde7661ddcd7b125f563cdcfd3a4bd1e9418332d78ff15f5afe6a1fde15d",
-				"dweb:/ipfs/QmQGGr6Asw99BsvEYEtkS38ShMDuQEvhpA2R7dTRnZyrKr"
+				"bzz-raw://a0c93a1a72c8baa8063ac6833d64f6f10cf41acc0714d3a1ec6157fbfbc00b3c",
+				"dweb:/ipfs/QmUHjFipxnLWrLDkvT7D5fGjJTgMqgybpnoaip7J7hr5bT"
 			]
 		},
 		"Base.sol": {
-			"keccak256": "0x4fe1ba3fd4622b8945c6ff03fe54383366da686a85f1cdc14d33c14ec2a1e84a",
+			"keccak256": "0xab089b6318c75468efa473d2ec1c79f7d70a2af501436ede48a6ed986686a4be",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://35be191e4f4d66681064384c03d0b4a13e323d249a3394d811dc4d0318047f91",
-				"dweb:/ipfs/Qmdzq3qy6xsxhAKSuYqRt1snDCzB7BpzcttbEqCSsnEDHi"
+				"bzz-raw://793d9889f20220f72b8b432c9c3397f407816cf00c0afd45c474f9d2aa3ba4a9",
+				"dweb:/ipfs/QmRD1wgCSXBEEjdAP7ZyLkKS8CYvFbLYYBas7bTyKjgA6V"
 			]
 		},
 		"Borrowing.sol": {
-			"keccak256": "0x12f6621b518aeb7f1cfd1df329b90015358d8dead8510b397ed2992bf082a2d3",
+			"keccak256": "0xeb4fbfb5f75750bc53f679c23cbb053aa9bf3adabb8fb96aecbb8c5cd7f8b2c7",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://ca0058575df64895df6cc992c7c7ea39aef2898388d0071f7df3d3c90d0101c5",
-				"dweb:/ipfs/QmUi8EHmj5mDq9vwtrnJoct6d5sjxuwzPuDLakgauKsdGu"
+				"bzz-raw://ef39905ebc5465d4c90656da942376bf702e0fcec02d5d6ee5a2c7cc9146334b",
+				"dweb:/ipfs/QmYF6Bm14ksrJ7Sut5QFSP1pVcFiT8rAJzUG3uKQwJeKD9"
 			]
 		},
 		"GasPool.sol": {
@@ -308,6 +458,14 @@
 			"urls": [
 				"bzz-raw://80a6f4b96763b5f883025a24308508eb5dc6df944edf0a6d085e51d8b92a2202",
 				"dweb:/ipfs/QmeKBAzz25QWU2tDAZmVgaDDtpf3yXfFbCKCNbMXKeMV6z"
+			]
+		},
+		"LiquidityMath.sol": {
+			"keccak256": "0x3aa4aca9d49da2f84360ced183eed1bd5e98025a20f52bf0bff9ce1bb4e55a3a",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://3c3b528734e737f79e9d5f40ee7d55547f2fffffb302cb42561f4c792530f9d4",
+				"dweb:/ipfs/QmRDRvzWk6mMs5Gqp4g7KXqc1maYqw8fTiBAxU2kKTYEnh"
 			]
 		},
 		"PriceFeed.sol": {
@@ -327,11 +485,11 @@
 			]
 		},
 		"StabilityPool.sol": {
-			"keccak256": "0x22b7f890309ef215aa8ffe58f97be5bd7b53543d8540e5cfd84f5b483f4addd8",
+			"keccak256": "0xa1d5b38fadf0388f467db5f6939bb2b1b7b8709a187362d7c6fa2a04a82c370e",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://ac3708df27729410b1d07de5257894bbf771c87835ce940bfbba68dd50caf66b",
-				"dweb:/ipfs/QmTadgTHGC7z5PWEfjHa8miZhg6kMc9EKaiJabnCTgEWzk"
+				"bzz-raw://e188e6fb3af67e226ea7a5802b2649c8a6009085329457165231a7acad58b0db",
+				"dweb:/ipfs/QmV47hXB87r89MVSHFwYjyh1DfpyqB8ZL3uUqCuCm57vcv"
 			]
 		},
 		"StakingPool.sol": {
@@ -343,11 +501,11 @@
 			]
 		},
 		"VaultManager.sol": {
-			"keccak256": "0xc47a506c4d8109e47b808dd603661c2e2c096d801efbe6ed68b616d8380dc80e",
+			"keccak256": "0xc70297356533347fb9fc08e54d30c2cb300402332a79adc53d8e391df1a76c7b",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://3844158c9864ee199f6f69c58b03489b9e1482ea726884364d056f959f3f897f",
-				"dweb:/ipfs/QmPFTZdfqpwzPmuNDn7cxSCFtFtQfjuVdW33tCJ5TVpMda"
+				"bzz-raw://61123a140f5462ac30f3858b410e87565d3e5e1af4e00f6c67436c7049f53508",
+				"dweb:/ipfs/QmX9Ts9he3avDyuBucXhcMSeUFAw5q9aywdoyW54QT2b3W"
 			]
 		},
 		"hardhat/console.sol": {

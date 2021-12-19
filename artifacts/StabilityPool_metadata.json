@@ -6,87 +6,23 @@
 	"output": {
 		"abi": [
 			{
-				"inputs": [],
-				"stateMutability": "nonpayable",
-				"type": "constructor"
-			},
-			{
-				"inputs": [],
-				"name": "BORROWING_FEE_FLOOR",
-				"outputs": [
+				"anonymous": false,
+				"inputs": [
 					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "DECIMAL_PRECISION",
-				"outputs": [
+						"indexed": true,
+						"internalType": "address",
+						"name": "previousOwner",
+						"type": "address"
+					},
 					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "LIQUIDATOR_FEE_PERCENT_DIVISOR",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "LUSD_GAS_COMPENSATION",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "MINIMUM_COLLATERAL_RATIO",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "activePool",
-				"outputs": [
-					{
-						"internalType": "contract ActivePool",
-						"name": "",
+						"indexed": true,
+						"internalType": "address",
+						"name": "newOwner",
 						"type": "address"
 					}
 				],
-				"stateMutability": "view",
-				"type": "function"
+				"name": "OwnershipTransferred",
+				"type": "event"
 			},
 			{
 				"inputs": [
@@ -96,19 +32,38 @@
 						"type": "uint256"
 					}
 				],
-				"name": "borrow",
+				"name": "deposit",
 				"outputs": [],
-				"stateMutability": "payable",
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "deposits",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
 				"inputs": [],
-				"name": "gasPool",
+				"name": "getTotalLUSDDeposits",
 				"outputs": [
 					{
-						"internalType": "contract GasPool",
+						"internalType": "uint256",
 						"name": "",
-						"type": "address"
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "view",
@@ -128,31 +83,24 @@
 				"type": "function"
 			},
 			{
-				"inputs": [],
-				"name": "priceFeed",
-				"outputs": [
+				"inputs": [
 					{
-						"internalType": "contract PriceFeed",
-						"name": "",
-						"type": "address"
+						"internalType": "uint256",
+						"name": "_lusdDebt",
+						"type": "uint256"
 					}
 				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "repay",
+				"name": "offSet",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
 				"inputs": [],
-				"name": "stabilityPool",
+				"name": "owner",
 				"outputs": [
 					{
-						"internalType": "contract StabilityPool",
+						"internalType": "address",
 						"name": "",
 						"type": "address"
 					}
@@ -162,23 +110,61 @@
 			},
 			{
 				"inputs": [],
-				"name": "stakingPool",
+				"name": "renounceOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_lusdTokenAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_vaultManagerAdddress",
+						"type": "address"
+					}
+				],
+				"name": "setAddresses",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "totalLUSDDeposits",
 				"outputs": [
 					{
-						"internalType": "contract StakingPool",
+						"internalType": "uint256",
 						"name": "",
-						"type": "address"
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "view",
 				"type": "function"
 			},
 			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "transferOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
 				"inputs": [],
-				"name": "vaultManager",
+				"name": "vaultManagerAddress",
 				"outputs": [
 					{
-						"internalType": "contract VaultManager",
+						"internalType": "address",
 						"name": "",
 						"type": "address"
 					}
@@ -189,7 +175,17 @@
 		],
 		"devdoc": {
 			"kind": "dev",
-			"methods": {},
+			"methods": {
+				"owner()": {
+					"details": "Returns the address of the current owner."
+				},
+				"renounceOwnership()": {
+					"details": "Leaves the contract without owner. It will not be possible to call `onlyOwner` functions anymore. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby removing any functionality that is only available to the owner."
+				},
+				"transferOwnership(address)": {
+					"details": "Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner."
+				}
+			},
 			"version": 1
 		},
 		"userdoc": {
@@ -200,7 +196,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"Borrowing.sol": "Borrowing"
+			"StabilityPool.sol": "StabilityPool"
 		},
 		"evmVersion": "london",
 		"libraries": {},
@@ -214,38 +210,6 @@
 		"remappings": []
 	},
 	"sources": {
-		"ActivePool.sol": {
-			"keccak256": "0xfbb46e3414d9825bf6de007b6cd30dc8f402baa3f0e6d06cf2e3023e1c01da36",
-			"license": "MIT",
-			"urls": [
-				"bzz-raw://a0c93a1a72c8baa8063ac6833d64f6f10cf41acc0714d3a1ec6157fbfbc00b3c",
-				"dweb:/ipfs/QmUHjFipxnLWrLDkvT7D5fGjJTgMqgybpnoaip7J7hr5bT"
-			]
-		},
-		"Base.sol": {
-			"keccak256": "0xab089b6318c75468efa473d2ec1c79f7d70a2af501436ede48a6ed986686a4be",
-			"license": "MIT",
-			"urls": [
-				"bzz-raw://793d9889f20220f72b8b432c9c3397f407816cf00c0afd45c474f9d2aa3ba4a9",
-				"dweb:/ipfs/QmRD1wgCSXBEEjdAP7ZyLkKS8CYvFbLYYBas7bTyKjgA6V"
-			]
-		},
-		"Borrowing.sol": {
-			"keccak256": "0x51f7491831e7a50ba4dbb7b54794de32ca462616978f9924f16c48c7fcbd5c19",
-			"license": "MIT",
-			"urls": [
-				"bzz-raw://5bceb0ea0e6b82e9517e63f64692ee589283663074b949308a1ae9584dece1fc",
-				"dweb:/ipfs/QmQTAUSjmoTpakscWKASfjyPMn7maNxnbWYqp7xNzpF6XY"
-			]
-		},
-		"GasPool.sol": {
-			"keccak256": "0xae444bb6117d829515e9ba4a04eb1bff81bb4a0233fda751bd0b1cacc35ccc2a",
-			"license": "MIT",
-			"urls": [
-				"bzz-raw://d1a0d865194591c80562a745b15d5618b439d92103e734e2e535f027bbb3509e",
-				"dweb:/ipfs/QmRph4empJ8pQEheq82hxzvURBSEQeq2k5wDRQNy5cGSQa"
-			]
-		},
 		"LUSDToken.sol": {
 			"keccak256": "0x207b17a2864d4f30a626fd96a2ffedaa3ae6a9cfb6cf3377f77e403c264285e9",
 			"license": "MIT",
@@ -254,52 +218,12 @@
 				"dweb:/ipfs/QmeKBAzz25QWU2tDAZmVgaDDtpf3yXfFbCKCNbMXKeMV6z"
 			]
 		},
-		"LiquidityMath.sol": {
-			"keccak256": "0x3aa4aca9d49da2f84360ced183eed1bd5e98025a20f52bf0bff9ce1bb4e55a3a",
-			"license": "MIT",
-			"urls": [
-				"bzz-raw://3c3b528734e737f79e9d5f40ee7d55547f2fffffb302cb42561f4c792530f9d4",
-				"dweb:/ipfs/QmRDRvzWk6mMs5Gqp4g7KXqc1maYqw8fTiBAxU2kKTYEnh"
-			]
-		},
-		"PriceFeed.sol": {
-			"keccak256": "0x93ac7fcc9b4bc26ab320caf7699ccf55a015abc10369db5e5303cee8af3db7db",
-			"license": "MIT",
-			"urls": [
-				"bzz-raw://872d1074408d7665ab50f35cd179073c4e5606a0d13d7b918c036c211b1e9b20",
-				"dweb:/ipfs/QmZCq5ZzDyj4bvdpzZwgsqhfHXKdo9n5tAY8ePvwaDtQSA"
-			]
-		},
-		"SortedVaults.sol": {
-			"keccak256": "0x22427e551f62d7e453eae2784f39316e3419017e7075a35cb1a5029d2233dfec",
-			"license": "MIT",
-			"urls": [
-				"bzz-raw://16c9741ef5dfb68038b0861ec19d1672d6fb36daab5b382013201d861f082dec",
-				"dweb:/ipfs/QmNjaiW7up6sriXDNMXE1oxcPF1BAmakojH8JJFu5dvFNA"
-			]
-		},
 		"StabilityPool.sol": {
-			"keccak256": "0xd70a4f7adfb4a7aee360340d14ff9a1d8268d1ba09f7c2dd6f6117a56f5b9ec2",
+			"keccak256": "0x57924d60d09fe01184160af90a2febdd1384eefd334d430f4bfc29994b427133",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://09199c510c471822decf1c4603d8e7c5e85a3367d2ad21f6fae27badcb251afe",
-				"dweb:/ipfs/QmWZHSjgZDzJ1Ns59GBoy4NNXtKS5iaev3Nvn3H2BJLhYx"
-			]
-		},
-		"StakingPool.sol": {
-			"keccak256": "0x0b3f9528ed0f0a9686bf9d96a627abbbfc26bcee067ed2192560b057e0fcf57b",
-			"license": "MIT",
-			"urls": [
-				"bzz-raw://e5eadd3e1ee5144718e9326a201ca379a3c9dfa2e2c0903a34ec7ea468d2a907",
-				"dweb:/ipfs/QmUXnwq9vEWZHgxaa3rJTbvA4JQgJUMGBwj7LYR7vhQ4HE"
-			]
-		},
-		"VaultManager.sol": {
-			"keccak256": "0x4b21bb1feb0d678882e31f0740d1a66c83b9ba320ddbc118854d5365d7546709",
-			"license": "MIT",
-			"urls": [
-				"bzz-raw://5ecf351801b47a962a1ec1e50e0ccd737e2588c841d3ba618308ac97a869e90a",
-				"dweb:/ipfs/QmZjvJp3oFSjsDkY1KCuExPrV1EVQwa9Q6Q27ZyDMvWQrr"
+				"bzz-raw://c64000d61722a05bdac6834da31914aa9c4e76648883a0ff5c793d42469b659d",
+				"dweb:/ipfs/QmaKtxf7UrJrs1bxw5rzStABzd4Vhzqda3L6n9jUMfywxe"
 			]
 		},
 		"hardhat/console.sol": {

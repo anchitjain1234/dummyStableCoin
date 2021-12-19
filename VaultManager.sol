@@ -5,9 +5,26 @@ pragma solidity ^0.8.7;
 import "./Base.sol";
 
 import "./SortedVaults.sol";
+import "./PriceFeed.sol";
+import "./LiquidityMath.sol";
+import "./StabilityPool.sol";
+import "./ActivePool.sol";
+import "./GasPool.sol";
+import "./LUSDToken.sol";
 
-contract VaultManager is Base {
+
+import "hardhat/console.sol";
+
+import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol";
+
+
+contract VaultManager is Base, Ownable {
     SortedVaults public sortedVaults;
+    PriceFeed public priceFeed;
+    StabilityPool public stabilityPool;
+    ActivePool public activePool;
+    LUSDToken public lusdToken;
+    GasPool public gasPool;
 
     uint256 public baseRate;
 
@@ -33,6 +50,16 @@ contract VaultManager is Base {
         sortedVaults = new SortedVaults(msg.sender);
         borrowingAddress = msg.sender;
         baseRate = 0;
+    }
+
+    function setAddresses(address _priceFeedAddress, address _stabilityPoolAddress, ActivePool _activePool, LUSDToken _lusdToken, GasPool _gasPool) external onlyOwner {
+        priceFeed = PriceFeed(_priceFeedAddress);
+        stabilityPool = StabilityPool(_stabilityPoolAddress);
+        activePool = _activePool;
+        lusdToken = _lusdToken;
+        gasPool = _gasPool;
+
+        renounceOwnership();
     }
 
     //collateral ratio without price
@@ -69,6 +96,47 @@ contract VaultManager is Base {
 
     function closeVault(address _borrower) external onlyBorrowingContract {
         _closeVault(_borrower, Status.closedByOwner);
+    }
+
+    function liquidate(address _borrower) external {
+        // get the price of the collateral
+        uint256 price = priceFeed.getPrice();
+        console.log("Price %s", price);
+
+        // get Vault info
+        (uint256 currentETH, uint256 currentLUSDDebt) = _getCurrentVaultAmounts(_borrower);
+        console.log("currentETH %s, currentLUSDDebt %s", currentETH, currentLUSDDebt);
+
+        // verify collateral ratio is less than needed
+        uint256 collateralRatio = LiquidityMath._computeCR(currentETH, currentLUSDDebt, price);
+        console.log("collateralRatio %s", collateralRatio);
+        require(collateralRatio < MINIMUM_COLLATERAL_RATIO, "VaultManager: Cannot liquidate vault");
+
+        // verify enough LUSD in Stability pool
+        uint256 lusdInStabilityPool = stabilityPool.getTotalLUSDDeposits();
+        require(lusdInStabilityPool >= currentLUSDDebt, "VaultManager: Insufficient funds in stability pool");
+
+        // calculate collateral compensation
+        uint256 collateralCompensation = currentETH * LIQUIDATOR_FEE_PERCENT_DIVISOR;
+        uint256 collateralToLiquidate = currentETH - collateralCompensation;
+
+        // decrease LUSD debt from active pool
+        activePool.decreaseLUSDDebt(currentLUSDDebt);
+
+        // close vault
+        _closeVault(_borrower, Status.closedByLiquidation);
+
+        // update LUSD deposits in the stability pool and burn tokens -> offset
+        stabilityPool.offSet(currentLUSDDebt);
+
+        // send liquidated ETH to stability pool -> distributed among providers
+        activePool.sendETH(address(stabilityPool), collateralToLiquidate);
+
+        //send gas compensation to liquidator
+        lusdToken.transferFrom(address(gasPool), msg.sender, LUSD_GAS_COMPENSATION);
+
+        // send liquidator his share
+        activePool.sendETH(msg.sender, collateralCompensation);
     }
 
     function _closeVault(address _borrower, Status _status) internal {
