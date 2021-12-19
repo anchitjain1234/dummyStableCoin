@@ -1,0 +1,403 @@
+{
+	"compiler": {
+		"version": "0.8.7+commit.e28d00a7"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"inputs": [],
+				"name": "BORROWING_FEE_FLOOR",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "DECIMAL_PRECISION",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "LUSD_GAS_COMPENSATION",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "MINIMUM_COLLATERAL_RATIO",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "baseRate",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "borrowingAddress",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_borrower",
+						"type": "address"
+					}
+				],
+				"name": "closeVault",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_borrower",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_ethAmount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_debt",
+						"type": "uint256"
+					}
+				],
+				"name": "createVault",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_lusdAmount",
+						"type": "uint256"
+					}
+				],
+				"name": "getBorrowingFee",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_borrower",
+						"type": "address"
+					}
+				],
+				"name": "getNominalICR",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_borrower",
+						"type": "address"
+					}
+				],
+				"name": "getVaultCollateral",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_borrower",
+						"type": "address"
+					}
+				],
+				"name": "getVaultDebt",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "sortedVaults",
+				"outputs": [
+					{
+						"internalType": "contract SortedVaults",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "vaults",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "debt",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "collateral",
+						"type": "uint256"
+					},
+					{
+						"internalType": "enum VaultManager.Status",
+						"name": "status",
+						"type": "uint8"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"VaultManager.sol": "VaultManager"
+		},
+		"evmVersion": "london",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"ActivePool.sol": {
+			"keccak256": "0x040cb975ead683c242965d9ee413cf4d6e0b60cee8d6eb31867821c66e07897b",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://f9f0dde7661ddcd7b125f563cdcfd3a4bd1e9418332d78ff15f5afe6a1fde15d",
+				"dweb:/ipfs/QmQGGr6Asw99BsvEYEtkS38ShMDuQEvhpA2R7dTRnZyrKr"
+			]
+		},
+		"Base.sol": {
+			"keccak256": "0x4fe1ba3fd4622b8945c6ff03fe54383366da686a85f1cdc14d33c14ec2a1e84a",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://35be191e4f4d66681064384c03d0b4a13e323d249a3394d811dc4d0318047f91",
+				"dweb:/ipfs/Qmdzq3qy6xsxhAKSuYqRt1snDCzB7BpzcttbEqCSsnEDHi"
+			]
+		},
+		"Borrowing.sol": {
+			"keccak256": "0x12f6621b518aeb7f1cfd1df329b90015358d8dead8510b397ed2992bf082a2d3",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://ca0058575df64895df6cc992c7c7ea39aef2898388d0071f7df3d3c90d0101c5",
+				"dweb:/ipfs/QmUi8EHmj5mDq9vwtrnJoct6d5sjxuwzPuDLakgauKsdGu"
+			]
+		},
+		"GasPool.sol": {
+			"keccak256": "0xae444bb6117d829515e9ba4a04eb1bff81bb4a0233fda751bd0b1cacc35ccc2a",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://d1a0d865194591c80562a745b15d5618b439d92103e734e2e535f027bbb3509e",
+				"dweb:/ipfs/QmRph4empJ8pQEheq82hxzvURBSEQeq2k5wDRQNy5cGSQa"
+			]
+		},
+		"LUSDToken.sol": {
+			"keccak256": "0x207b17a2864d4f30a626fd96a2ffedaa3ae6a9cfb6cf3377f77e403c264285e9",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://80a6f4b96763b5f883025a24308508eb5dc6df944edf0a6d085e51d8b92a2202",
+				"dweb:/ipfs/QmeKBAzz25QWU2tDAZmVgaDDtpf3yXfFbCKCNbMXKeMV6z"
+			]
+		},
+		"PriceFeed.sol": {
+			"keccak256": "0x93ac7fcc9b4bc26ab320caf7699ccf55a015abc10369db5e5303cee8af3db7db",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://872d1074408d7665ab50f35cd179073c4e5606a0d13d7b918c036c211b1e9b20",
+				"dweb:/ipfs/QmZCq5ZzDyj4bvdpzZwgsqhfHXKdo9n5tAY8ePvwaDtQSA"
+			]
+		},
+		"SortedVaults.sol": {
+			"keccak256": "0x22427e551f62d7e453eae2784f39316e3419017e7075a35cb1a5029d2233dfec",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://16c9741ef5dfb68038b0861ec19d1672d6fb36daab5b382013201d861f082dec",
+				"dweb:/ipfs/QmNjaiW7up6sriXDNMXE1oxcPF1BAmakojH8JJFu5dvFNA"
+			]
+		},
+		"StabilityPool.sol": {
+			"keccak256": "0x22b7f890309ef215aa8ffe58f97be5bd7b53543d8540e5cfd84f5b483f4addd8",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://ac3708df27729410b1d07de5257894bbf771c87835ce940bfbba68dd50caf66b",
+				"dweb:/ipfs/QmTadgTHGC7z5PWEfjHa8miZhg6kMc9EKaiJabnCTgEWzk"
+			]
+		},
+		"StakingPool.sol": {
+			"keccak256": "0x0b3f9528ed0f0a9686bf9d96a627abbbfc26bcee067ed2192560b057e0fcf57b",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://e5eadd3e1ee5144718e9326a201ca379a3c9dfa2e2c0903a34ec7ea468d2a907",
+				"dweb:/ipfs/QmUXnwq9vEWZHgxaa3rJTbvA4JQgJUMGBwj7LYR7vhQ4HE"
+			]
+		},
+		"VaultManager.sol": {
+			"keccak256": "0xc47a506c4d8109e47b808dd603661c2e2c096d801efbe6ed68b616d8380dc80e",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://3844158c9864ee199f6f69c58b03489b9e1482ea726884364d056f959f3f897f",
+				"dweb:/ipfs/QmPFTZdfqpwzPmuNDn7cxSCFtFtQfjuVdW33tCJ5TVpMda"
+			]
+		},
+		"hardhat/console.sol": {
+			"keccak256": "0x72b6a1d297cd3b033d7c2e4a7e7864934bb767db6453623f1c3082c6534547f4",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://a8cb8681076e765c214e0d51cac989325f6b98e315eaae06ee0cbd5a9f084763",
+				"dweb:/ipfs/QmNWGHi4zmjxQTYN3NMGnJd49jBT5dE4bxTdWEaDuJrC6N"
+			]
+		},
+		"https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol": {
+			"keccak256": "0x24e0364e503a9bbde94c715d26573a76f14cd2a202d45f96f52134ab806b67b9",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://e12cbaa7378fd9b62280e4e1d164bedcb4399ce238f5f98fc0eefb7e50577981",
+				"dweb:/ipfs/QmXRoFGUgfsaRkoPT5bxNMtSayKTQ8GZATLPXf69HcRA51"
+			]
+		},
+		"https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/ERC20.sol": {
+			"keccak256": "0xd1d8caaeb45f78e0b0715664d56c220c283c89bf8b8c02954af86404d6b367f8",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://300a0cc7be3b26c96c22a47ffa9530a585e1c4f2dba3021d9bf309dc63007487",
+				"dweb:/ipfs/QmQmxsvxK6CaJmQ4D8vDCYPLHMqcMmZLcBqedG4GFAbzu9"
+			]
+		},
+		"https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/IERC20.sol": {
+			"keccak256": "0x61437cb513a887a1bbad006e7b1c8b414478427d33de47c5600af3c748f108da",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://2c3d0973630ed74f2b5ce3944677a885dc70ec32fc83b35f55045a10224da32b",
+				"dweb:/ipfs/QmbefZ5RoEZKNHXCALfh683PnaNYzKPcKMFjyY1DVAgq8A"
+			]
+		},
+		"https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/extensions/IERC20Metadata.sol": {
+			"keccak256": "0x8de418a5503946cabe331f35fe242d3201a73f67f77aaeb7110acb1f30423aca",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://5a376d3dda2cb70536c0a45c208b29b34ac560c4cb4f513a42079f96ba47d2dd",
+				"dweb:/ipfs/QmZQg6gn1sUpM8wHzwNvSnihumUCAhxD119MpXeKp8B9s8"
+			]
+		},
+		"https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/Context.sol": {
+			"keccak256": "0xe2e337e6dde9ef6b680e07338c493ebea1b5fd09b43424112868e9cc1706bca7",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://6df0ddf21ce9f58271bdfaa85cde98b200ef242a05a3f85c2bc10a8294800a92",
+				"dweb:/ipfs/QmRK2Y5Yc6BK7tGKkgsgn3aJEQGi5aakeSPZvS65PV8Xp3"
+			]
+		}
+	},
+	"version": 1
+}
