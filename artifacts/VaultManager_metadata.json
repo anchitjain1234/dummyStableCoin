@@ -170,6 +170,19 @@
 				"type": "function"
 			},
 			{
+				"inputs": [],
+				"name": "gasPool",
+				"outputs": [
+					{
+						"internalType": "contract GasPool",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
 				"inputs": [
 					{
 						"internalType": "uint256",
@@ -260,6 +273,19 @@
 			},
 			{
 				"inputs": [],
+				"name": "lusdToken",
+				"outputs": [
+					{
+						"internalType": "contract LUSDToken",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
 				"name": "owner",
 				"outputs": [
 					{
@@ -299,13 +325,23 @@
 						"type": "address"
 					},
 					{
-						"internalType": "address",
-						"name": "_stabilityPoolAddress",
+						"internalType": "contract StabilityPool",
+						"name": "_stabilityPool",
 						"type": "address"
 					},
 					{
 						"internalType": "contract ActivePool",
 						"name": "_activePool",
+						"type": "address"
+					},
+					{
+						"internalType": "contract LUSDToken",
+						"name": "_lusdToken",
+						"type": "address"
+					},
+					{
+						"internalType": "contract GasPool",
+						"name": "_gasPool",
 						"type": "address"
 					}
 				],
@@ -437,19 +473,19 @@
 			]
 		},
 		"Borrowing.sol": {
-			"keccak256": "0xeb4fbfb5f75750bc53f679c23cbb053aa9bf3adabb8fb96aecbb8c5cd7f8b2c7",
+			"keccak256": "0x2f3a84c72df0266e77771b748bbe4db573242b70be87dd3a691c84f8459993d2",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://ef39905ebc5465d4c90656da942376bf702e0fcec02d5d6ee5a2c7cc9146334b",
-				"dweb:/ipfs/QmYF6Bm14ksrJ7Sut5QFSP1pVcFiT8rAJzUG3uKQwJeKD9"
+				"bzz-raw://06ec7717f96d9c107a17166bf94dd23d82dfadcca08a28c45e6ad88af887b4f0",
+				"dweb:/ipfs/QmZ589evxTmd4Wbn3V9oj7eUWQrgKaRYf2eK5nArWawmPS"
 			]
 		},
 		"GasPool.sol": {
-			"keccak256": "0xae444bb6117d829515e9ba4a04eb1bff81bb4a0233fda751bd0b1cacc35ccc2a",
+			"keccak256": "0xa0e2e6bbfadb1588fdd5b9238a78f311e61c320c49f3a2b3241d66a4fc1f0070",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://d1a0d865194591c80562a745b15d5618b439d92103e734e2e535f027bbb3509e",
-				"dweb:/ipfs/QmRph4empJ8pQEheq82hxzvURBSEQeq2k5wDRQNy5cGSQa"
+				"bzz-raw://8a7a158dcb7b7750811a39ce587ad38591ed58106f27fcf2e64cce1d67a1abae",
+				"dweb:/ipfs/QmQiwaAbSCPipcHkSEDNvywmnZMWzSmiVrS2MzuNg6hHTb"
 			]
 		},
 		"LUSDToken.sol": {
@@ -485,11 +521,11 @@
 			]
 		},
 		"StabilityPool.sol": {
-			"keccak256": "0xa1d5b38fadf0388f467db5f6939bb2b1b7b8709a187362d7c6fa2a04a82c370e",
+			"keccak256": "0xe4650d343a54007cd86c1676aafbaf4fcea6d2561933b8fa9946dcd782a88af9",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://e188e6fb3af67e226ea7a5802b2649c8a6009085329457165231a7acad58b0db",
-				"dweb:/ipfs/QmV47hXB87r89MVSHFwYjyh1DfpyqB8ZL3uUqCuCm57vcv"
+				"bzz-raw://9a41dda7e74aa7714d651372e35dbaa643f3e608e7a6165dc86ed41158fef425",
+				"dweb:/ipfs/QmWMRcxmqq8ryqA3GPtv8jBT4rDFwo8sQmrzugzwHsGWAH"
 			]
 		},
 		"StakingPool.sol": {
@@ -501,11 +537,11 @@
 			]
 		},
 		"VaultManager.sol": {
-			"keccak256": "0xc70297356533347fb9fc08e54d30c2cb300402332a79adc53d8e391df1a76c7b",
+			"keccak256": "0xb4760c7faac53fd19cb9572e9767d99c3d9cba6d34f9690b7930174a80457131",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://61123a140f5462ac30f3858b410e87565d3e5e1af4e00f6c67436c7049f53508",
-				"dweb:/ipfs/QmX9Ts9he3avDyuBucXhcMSeUFAw5q9aywdoyW54QT2b3W"
+				"bzz-raw://8c10b6af14f79f18a7ea927039e1c3e1583ca254c766800fa92bc209b2366133",
+				"dweb:/ipfs/QmR2FALVtsCZrLhbWDufgjDpxKbujjT2WefAzqdP2vHKMY"
 			]
 		},
 		"hardhat/console.sol": {

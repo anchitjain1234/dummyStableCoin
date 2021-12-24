@@ -52,9 +52,9 @@ contract VaultManager is Base, Ownable {
         baseRate = 0;
     }
 
-    function setAddresses(address _priceFeedAddress, address _stabilityPoolAddress, ActivePool _activePool, LUSDToken _lusdToken, GasPool _gasPool) external onlyOwner {
+    function setAddresses(address _priceFeedAddress, StabilityPool _stabilityPool, ActivePool _activePool, LUSDToken _lusdToken, GasPool _gasPool) external onlyOwner {
         priceFeed = PriceFeed(_priceFeedAddress);
-        stabilityPool = StabilityPool(_stabilityPoolAddress);
+        stabilityPool = _stabilityPool;
         activePool = _activePool;
         lusdToken = _lusdToken;
         gasPool = _gasPool;
@@ -114,11 +114,13 @@ contract VaultManager is Base, Ownable {
 
         // verify enough LUSD in Stability pool
         uint256 lusdInStabilityPool = stabilityPool.getTotalLUSDDeposits();
+        console.log("lusdInStabilityPool %s", lusdInStabilityPool);
         require(lusdInStabilityPool >= currentLUSDDebt, "VaultManager: Insufficient funds in stability pool");
 
         // calculate collateral compensation
-        uint256 collateralCompensation = currentETH * LIQUIDATOR_FEE_PERCENT_DIVISOR;
+        uint256 collateralCompensation = currentETH / LIQUIDATOR_FEE_PERCENT_DIVISOR;
         uint256 collateralToLiquidate = currentETH - collateralCompensation;
+        console.log("collateralCompensation %s, collateralToLiquidate %s", collateralCompensation, collateralToLiquidate);
 
         // decrease LUSD debt from active pool
         activePool.decreaseLUSDDebt(currentLUSDDebt);

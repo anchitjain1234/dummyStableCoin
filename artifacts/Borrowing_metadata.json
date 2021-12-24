@@ -231,19 +231,19 @@
 			]
 		},
 		"Borrowing.sol": {
-			"keccak256": "0x51f7491831e7a50ba4dbb7b54794de32ca462616978f9924f16c48c7fcbd5c19",
+			"keccak256": "0x2f3a84c72df0266e77771b748bbe4db573242b70be87dd3a691c84f8459993d2",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://5bceb0ea0e6b82e9517e63f64692ee589283663074b949308a1ae9584dece1fc",
-				"dweb:/ipfs/QmQTAUSjmoTpakscWKASfjyPMn7maNxnbWYqp7xNzpF6XY"
+				"bzz-raw://06ec7717f96d9c107a17166bf94dd23d82dfadcca08a28c45e6ad88af887b4f0",
+				"dweb:/ipfs/QmZ589evxTmd4Wbn3V9oj7eUWQrgKaRYf2eK5nArWawmPS"
 			]
 		},
 		"GasPool.sol": {
-			"keccak256": "0xae444bb6117d829515e9ba4a04eb1bff81bb4a0233fda751bd0b1cacc35ccc2a",
+			"keccak256": "0xa0e2e6bbfadb1588fdd5b9238a78f311e61c320c49f3a2b3241d66a4fc1f0070",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://d1a0d865194591c80562a745b15d5618b439d92103e734e2e535f027bbb3509e",
-				"dweb:/ipfs/QmRph4empJ8pQEheq82hxzvURBSEQeq2k5wDRQNy5cGSQa"
+				"bzz-raw://8a7a158dcb7b7750811a39ce587ad38591ed58106f27fcf2e64cce1d67a1abae",
+				"dweb:/ipfs/QmQiwaAbSCPipcHkSEDNvywmnZMWzSmiVrS2MzuNg6hHTb"
 			]
 		},
 		"LUSDToken.sol": {
@@ -279,11 +279,11 @@
 			]
 		},
 		"StabilityPool.sol": {
-			"keccak256": "0xd70a4f7adfb4a7aee360340d14ff9a1d8268d1ba09f7c2dd6f6117a56f5b9ec2",
+			"keccak256": "0xe4650d343a54007cd86c1676aafbaf4fcea6d2561933b8fa9946dcd782a88af9",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://09199c510c471822decf1c4603d8e7c5e85a3367d2ad21f6fae27badcb251afe",
-				"dweb:/ipfs/QmWZHSjgZDzJ1Ns59GBoy4NNXtKS5iaev3Nvn3H2BJLhYx"
+				"bzz-raw://9a41dda7e74aa7714d651372e35dbaa643f3e608e7a6165dc86ed41158fef425",
+				"dweb:/ipfs/QmWMRcxmqq8ryqA3GPtv8jBT4rDFwo8sQmrzugzwHsGWAH"
 			]
 		},
 		"StakingPool.sol": {
@@ -295,11 +295,11 @@
 			]
 		},
 		"VaultManager.sol": {
-			"keccak256": "0x4b21bb1feb0d678882e31f0740d1a66c83b9ba320ddbc118854d5365d7546709",
+			"keccak256": "0xb4760c7faac53fd19cb9572e9767d99c3d9cba6d34f9690b7930174a80457131",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://5ecf351801b47a962a1ec1e50e0ccd737e2588c841d3ba618308ac97a869e90a",
-				"dweb:/ipfs/QmZjvJp3oFSjsDkY1KCuExPrV1EVQwa9Q6Q27ZyDMvWQrr"
+				"bzz-raw://8c10b6af14f79f18a7ea927039e1c3e1583ca254c766800fa92bc209b2366133",
+				"dweb:/ipfs/QmR2FALVtsCZrLhbWDufgjDpxKbujjT2WefAzqdP2vHKMY"
 			]
 		},
 		"hardhat/console.sol": {

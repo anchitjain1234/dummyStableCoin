@@ -32,7 +32,6 @@ contract Borrowing is Base {
         priceFeed = new PriceFeed();
         priceFeed.setPrice(1000 * 10**18);
 
-        gasPool = new GasPool();
         stabilityPool = new StabilityPool();
         activePool = new ActivePool();
         stakingPool = new StakingPool();
@@ -41,10 +40,12 @@ contract Borrowing is Base {
 
         lusdToken = new LUSDToken(address(vaultManager), address(stabilityPool));
 
+        gasPool = new GasPool(lusdToken, address(vaultManager));
+
         stakingPool.setAddresses(address(this), address(vaultManager));
         activePool.setAddresses(address(vaultManager), address(stabilityPool));
-        vaultManager.setAddresses(address(priceFeed), address(stabilityPool), activePool, lusdToken, gasPool);
-        stabilityPool.setAddresses(address(lusdToken), address(vaultManager));
+        vaultManager.setAddresses(address(priceFeed), stabilityPool, activePool, lusdToken, gasPool);
+        stabilityPool.setAddresses(address(lusdToken), address(vaultManager), address(activePool));
     }
 
     function borrow(uint256 _lusdAmount) external payable {

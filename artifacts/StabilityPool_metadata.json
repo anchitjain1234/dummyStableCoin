@@ -25,6 +25,19 @@
 				"type": "event"
 			},
 			{
+				"inputs": [],
+				"name": "activePoolAddress",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
 				"inputs": [
 					{
 						"internalType": "uint256",
@@ -46,6 +59,19 @@
 					}
 				],
 				"name": "deposits",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getTotalETHDeposits",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -126,11 +152,29 @@
 						"internalType": "address",
 						"name": "_vaultManagerAdddress",
 						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_activePoolAddress",
+						"type": "address"
 					}
 				],
 				"name": "setAddresses",
 				"outputs": [],
 				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "totalETHDeposited",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -171,6 +215,10 @@
 				],
 				"stateMutability": "view",
 				"type": "function"
+			},
+			{
+				"stateMutability": "payable",
+				"type": "receive"
 			}
 		],
 		"devdoc": {
@@ -219,11 +267,11 @@
 			]
 		},
 		"StabilityPool.sol": {
-			"keccak256": "0x57924d60d09fe01184160af90a2febdd1384eefd334d430f4bfc29994b427133",
+			"keccak256": "0xe4650d343a54007cd86c1676aafbaf4fcea6d2561933b8fa9946dcd782a88af9",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://c64000d61722a05bdac6834da31914aa9c4e76648883a0ff5c793d42469b659d",
-				"dweb:/ipfs/QmaKtxf7UrJrs1bxw5rzStABzd4Vhzqda3L6n9jUMfywxe"
+				"bzz-raw://9a41dda7e74aa7714d651372e35dbaa643f3e608e7a6165dc86ed41158fef425",
+				"dweb:/ipfs/QmWMRcxmqq8ryqA3GPtv8jBT4rDFwo8sQmrzugzwHsGWAH"
 			]
 		},
 		"hardhat/console.sol": {

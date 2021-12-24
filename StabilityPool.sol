@@ -9,15 +9,18 @@ import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contr
 // Hold LUSD deposited + ETH liquidated
 contract StabilityPool is Ownable {
     uint256 public totalLUSDDeposits;
+    uint256 public totalETHDeposited;
 
     mapping(address => uint256) public deposits;
 
     LUSDToken public lusdToken;
     address public vaultManagerAddress;
+    address public activePoolAddress;
 
-    function setAddresses(address _lusdTokenAddress, address _vaultManagerAdddress) external onlyOwner {
+    function setAddresses(address _lusdTokenAddress, address _vaultManagerAdddress, address _activePoolAddress) external onlyOwner {
         lusdToken = LUSDToken(_lusdTokenAddress);
         vaultManagerAddress = _vaultManagerAdddress;
+        activePoolAddress = _activePoolAddress;
         renounceOwnership();
     }
 
@@ -37,8 +40,21 @@ contract StabilityPool is Ownable {
         lusdToken.burn(address(this), _lusdDebt);
     }
 
+    receive() external payable onlyActivePool {
+        totalETHDeposited += msg.value;
+    }
+
+    function getTotalETHDeposits() external view returns(uint256) {
+        return totalETHDeposited;
+    }
+
     modifier onlyVaultManager {
         require(msg.sender == vaultManagerAddress, "StabilityPool: Sender is not vault manager");
+        _;
+    }
+
+    modifier onlyActivePool {
+        require(msg.sender == activePoolAddress, "StabilityPool: Sender is not Active Pool");
         _;
     }
 }
