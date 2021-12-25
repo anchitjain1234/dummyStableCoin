@@ -42,9 +42,9 @@ contract Borrowing is Base {
 
         gasPool = new GasPool(lusdToken, address(vaultManager));
 
-        stakingPool.setAddresses(address(this), address(vaultManager));
+        stakingPool.setAddresses(address(this), address(vaultManager), activePool);
         activePool.setAddresses(address(vaultManager), address(stabilityPool));
-        vaultManager.setAddresses(address(priceFeed), stabilityPool, activePool, lusdToken, gasPool);
+        vaultManager.setAddresses(address(priceFeed), stabilityPool, activePool, lusdToken, gasPool, stakingPool);
         stabilityPool.setAddresses(address(lusdToken), address(vaultManager), address(activePool));
     }
 
@@ -61,6 +61,9 @@ contract Borrowing is Base {
                     collateralRatio / DECIMAL_PRECISION);
 
         require(collateralRatio >= MINIMUM_COLLATERAL_RATIO, "Borrowing: Invalid Collateral Ratio");
+
+        vaultManager.decayBaseRateFromBorrowing(); // decay the baseRate state variable
+        console.log("After decay base rate");
 
         // get borrowing fee
         uint256 borrowingFee = vaultManager.getBorrowingFee(debt);

@@ -4,6 +4,8 @@ pragma solidity ^0.8.7;
 
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol";
 
+import "./ActivePool.sol";
+
 // Hold borrowing fees + Redemption fee rewards
 contract StakingPool is Ownable {
     uint256 public totalETHFees; // on redemptions
@@ -11,10 +13,12 @@ contract StakingPool is Ownable {
 
     address public borrowingAddress;
     address public vaultManagerAddress;
+    ActivePool activePool;
 
-    function setAddresses(address _borrowingAddress, address _vaultManagerAddress) external onlyOwner {
+    function setAddresses(address _borrowingAddress, address _vaultManagerAddress, ActivePool _activePool) external onlyOwner {
         borrowingAddress = _borrowingAddress;
         vaultManagerAddress = _vaultManagerAddress;
+        activePool = _activePool;
 
         //renounces ownership so that this method can't be called anymore
         renounceOwnership();
@@ -36,6 +40,14 @@ contract StakingPool is Ownable {
     modifier onlyVaultManagerContract {
         require(msg.sender == vaultManagerAddress, "StakingPool: Invalid vault manager contract");
         _;
+    }
+
+    modifier onlyActivePool {
+        require(msg.sender == address(activePool), "StakingPool: Caller is not the ActivePool");
+        _;
+    }
+    
+    receive() external payable onlyActivePool {
     }
 
     // modifier onlyOwner {

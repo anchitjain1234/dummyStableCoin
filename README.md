@@ -1,4 +1,6 @@
-#### Stablecoin based on liquity pool
+#### Stablecoin based on liquity protocol
+
+Liquidity protocol -> https://docsend.com/view/bwiczmy
 
 Deployed on Rinkeby testnet
 

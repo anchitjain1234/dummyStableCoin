@@ -8,6 +8,7 @@ import "./SortedVaults.sol";
 import "./PriceFeed.sol";
 import "./LiquidityMath.sol";
 import "./StabilityPool.sol";
+import "./StakingPool.sol";
 import "./ActivePool.sol";
 import "./GasPool.sol";
 import "./LUSDToken.sol";
@@ -22,6 +23,7 @@ contract VaultManager is Base, Ownable {
     SortedVaults public sortedVaults;
     PriceFeed public priceFeed;
     StabilityPool public stabilityPool;
+    StakingPool public stakingPool;
     ActivePool public activePool;
     LUSDToken public lusdToken;
     GasPool public gasPool;
@@ -29,6 +31,9 @@ contract VaultManager is Base, Ownable {
     uint256 public baseRate;
 
     address public borrowingAddress;
+
+    // latest fee operation (redemption or new LUSD issuance)
+    uint256 public lastFeeOperationTime;
 
     enum Status {
         nonExistent,
@@ -52,12 +57,13 @@ contract VaultManager is Base, Ownable {
         baseRate = 0;
     }
 
-    function setAddresses(address _priceFeedAddress, StabilityPool _stabilityPool, ActivePool _activePool, LUSDToken _lusdToken, GasPool _gasPool) external onlyOwner {
+    function setAddresses(address _priceFeedAddress, StabilityPool _stabilityPool, ActivePool _activePool, LUSDToken _lusdToken, GasPool _gasPool, StakingPool _stakingPool) external onlyOwner {
         priceFeed = PriceFeed(_priceFeedAddress);
         stabilityPool = _stabilityPool;
         activePool = _activePool;
         lusdToken = _lusdToken;
         gasPool = _gasPool;
+        stakingPool = _stakingPool;
 
         renounceOwnership();
     }
@@ -73,9 +79,23 @@ contract VaultManager is Base, Ownable {
         }
     }
 
-    function getBorrowingFee(uint256 _lusdAmount) external view returns(uint256) {
-        //base rate + 0.5 of LUSD amt
-        return baseRate + BORROWING_FEE_FLOOR * _lusdAmount / DECIMAL_PRECISION;
+    function getBorrowingFee(uint _LUSDDebt) external view returns (uint) {
+        return _calcBorrowingFee(getBorrowingRate(), _LUSDDebt);
+    }
+    
+    function _calcBorrowingFee(uint _borrowingRate, uint _LUSDDebt) internal pure returns (uint) {
+        return _borrowingRate * _LUSDDebt / DECIMAL_PRECISION;
+    }
+    
+    function getBorrowingRate() public view returns (uint) {
+        return _calcBorrowingRate(baseRate);
+    }
+
+    function _calcBorrowingRate(uint _baseRate) internal pure returns (uint) {
+        return LiquidityMath._min(
+            BORROWING_FEE_FLOOR + _baseRate,
+            MAX_BORROWING_FEE
+        );
     }
 
     function createVault(address _borrower, uint256 _ethAmount, uint256 _debt) external onlyBorrowingContract {
@@ -139,6 +159,136 @@ contract VaultManager is Base, Ownable {
 
         // send liquidator his share
         activePool.sendETH(msg.sender, collateralCompensation);
+    }
+
+    function redemption(uint256 _amountToRedeem) external {
+        require(lusdToken.balanceOf(msg.sender) >= _amountToRedeem, "VaultManager: Insufficient balance");
+
+        uint256 price = priceFeed.getPrice();
+        console.log("ETH Price %s: ", price);
+
+        // for simplicity always redeeming from the last vault, rather than going through all the vaults until the complete amount is redeemed
+        address borrowerToRedeem = sortedVaults.getLast();
+
+        // max amount to redeem is limited by the debt amount of the borrower
+        uint256 maxAmountToRedeem = LiquidityMath._min(_amountToRedeem, vaults[borrowerToRedeem].debt - LUSD_GAS_COMPENSATION);
+        console.log("LUSD to redeem %s", maxAmountToRedeem);
+
+        // eth amount equivalent in USD
+        uint256 ethAmountToRedeem = maxAmountToRedeem * DECIMAL_PRECISION / price;
+        console.log("Eth to redeem %s", ethAmountToRedeem);
+
+        uint256 newDebt = vaults[borrowerToRedeem].debt - maxAmountToRedeem;
+        uint256 newCollateral = vaults[borrowerToRedeem].collateral - ethAmountToRedeem;
+        console.log("newDebt %s", newDebt);
+        console.log("newCollateral %s", newCollateral);
+
+        if (newDebt == LUSD_GAS_COMPENSATION) {
+            _closeVault(borrowerToRedeem, Status.closedByRedemption);
+        } else {
+            uint256 newNICR = LiquidityMath._computeNominalCR(newCollateral, newDebt);
+            sortedVaults.reInsert(borrowerToRedeem, newNICR);
+
+            console.log("Old debt %s", vaults[borrowerToRedeem].debt);
+            console.log("Old collateral %s", vaults[borrowerToRedeem].collateral);
+            vaults[borrowerToRedeem].debt = newDebt;
+            vaults[borrowerToRedeem].collateral = newCollateral;
+        }
+
+        uint256 totalSystemDebt = activePool.getLUSDDebt();
+        console.log("totalSystemDebt %s", totalSystemDebt);
+
+        // decay the base rate
+        _updateBaseRateFromRedemption(ethAmountToRedeem, price, totalSystemDebt);
+
+        // Calculate the redemption fee in ETH
+        uint256 ethFee = _getRedemptionFee(ethAmountToRedeem);
+        console.log("ethFee %s", ethFee);
+
+        // Send the ETH fee to the LQTY staking contract
+        activePool.sendETH(address(stakingPool), ethFee);
+        stakingPool.increaseETHFees(ethFee);
+
+        uint256 ethToSendToRedeemer = ethAmountToRedeem - ethFee;
+        console.log("ethToSendToRedeemer %s", ethToSendToRedeemer);
+       
+        // Burn the total LUSD that is cancelled with debt
+        lusdToken.burn(msg.sender, maxAmountToRedeem);
+        
+        // Update Active Pool LUSD
+        activePool.decreaseLUSDDebt(maxAmountToRedeem);
+        
+        // send ETH to redeemer
+        activePool.sendETH(msg.sender, ethToSendToRedeemer);
+
+    }
+
+    function decayBaseRateFromBorrowing() external onlyBorrowingContract {
+        uint decayedBaseRate = _calcDecayedBaseRate();
+        assert(decayedBaseRate <= DECIMAL_PRECISION);  // The baseRate can decay to 0
+
+        baseRate = decayedBaseRate;
+
+        _updateLastFeeOpTime();
+    }
+
+    function _updateBaseRateFromRedemption(uint256 _ETHDrawn,  uint256 _price, uint256 _totalLUSDSupply) internal returns(uint) {
+        uint decayedBaseRate = _calcDecayedBaseRate();
+
+        /* Convert the drawn ETH back to LUSD at face value rate (1 LUSD:1 USD), in order to get
+        * the fraction of total supply that was redeemed at face value. */
+        uint redeemedLUSDFraction = (_ETHDrawn * _price) / _totalLUSDSupply;
+
+        uint newBaseRate = decayedBaseRate + (redeemedLUSDFraction / BETA);
+        newBaseRate = LiquidityMath._min(newBaseRate, DECIMAL_PRECISION); // cap baseRate at a maximum of 100%
+
+        baseRate = newBaseRate;
+
+        _updateLastFeeOpTime();
+
+        return newBaseRate;
+    }
+
+    function _getRedemptionFee(uint _ETHDrawn) internal view returns (uint) {
+        return _calcRedemptionFee(getRedemptionRate(), _ETHDrawn);
+    }
+    
+    function _calcRedemptionFee(uint _redemptionRate, uint _ETHDrawn) internal pure returns (uint) {
+        uint redemptionFee = _redemptionRate * _ETHDrawn / DECIMAL_PRECISION;
+        require(redemptionFee < _ETHDrawn, "TroveManager: Fee would eat up all returned collateral");
+        return redemptionFee;
+    }
+    
+    function getRedemptionRate() public view returns (uint) {
+        return _calcRedemptionRate(baseRate);
+    }
+    
+    function _calcRedemptionRate(uint _baseRate) internal pure returns (uint) {
+        return LiquidityMath._min(
+            REDEMPTION_FEE_FLOOR + _baseRate,
+            DECIMAL_PRECISION // cap at a maximum of 100%
+        );
+    }
+
+    function _calcDecayedBaseRate() internal view returns (uint) {
+        uint minutesPassed = _minutesPassedSinceLastFeeOp();
+        console.log("MinutesPassed %s", minutesPassed);
+        
+        uint decayFactor = LiquidityMath._decPow(MINUTE_DECAY_FACTOR, minutesPassed);
+
+        return baseRate * decayFactor / DECIMAL_PRECISION;
+    }
+
+    function _minutesPassedSinceLastFeeOp() internal view returns (uint) {
+        return block.timestamp - lastFeeOperationTime / SECONDS_IN_ONE_MINUTE;
+    }
+
+    function _updateLastFeeOpTime() internal {
+        uint timePassed = block.timestamp - lastFeeOperationTime;
+
+        if (timePassed >= SECONDS_IN_ONE_MINUTE) {
+            lastFeeOperationTime = block.timestamp;
+        }
     }
 
     function _closeVault(address _borrower, Status _status) internal {
